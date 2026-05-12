@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruby on Rails Blog — Повний Гайд</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ruby: #CC342D;
+    --ruby-dark: #8B1A15;
+    --ruby-light: #FBEAEA;
+    --rail-gold: #C9901A;
+    --rail-gold-light: #FDF3DC;
+    --ink: #1A1814;
+    --ink-muted: #5A564F;
+    --ink-hint: #9A9690;
+    --surface: #FDFCF9;
+    --surface-2: #F5F2EC;
+    --surface-3: #EDE9E0;
+    --border: rgba(26,24,20,0.12);
+    --border-strong: rgba(26,24,20,0.25);
+    --green: #2E7D32;
+    --green-light: #E8F5E9;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Instrument Sans', sans-serif;
+    background: var(--surface);
+    color: var(--ink);
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--ink);
+    color: #fff;
+    padding: 80px 48px 72px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    border: 48px solid rgba(204,52,45,0.18);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 200px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    border: 32px solid rgba(201,144,26,0.14);
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(204,52,45,0.2);
+    border: 1px solid rgba(204,52,45,0.4);
+    color: #F4A4A1;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.08em;
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+  }
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #CC342D; }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: #CC342D;
+  }
+  .hero p {
+    font-size: 17px;
+    color: rgba(255,255,255,0.65);
+    max-width: 560px;
+    margin-bottom: 36px;
+  }
+  .hero-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.15s;
+    cursor: pointer;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn-primary { background: var(--ruby); color: #fff; }
+  .btn-ghost {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: #fff;
+  }
+
+  /* MAIN LAYOUT */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 32px; }
+
+  /* VIDEO SECTION */
+  .video-section {
+    padding: 64px 48px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ruby);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .section-subtitle {
+    color: var(--ink-muted);
+    font-size: 15px;
+    margin-bottom: 36px;
+    max-width: 540px;
+  }
+  .video-wrapper {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--ink);
+    aspect-ratio: 16/9;
+    max-width: 720px;
+  }
+  .video-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 320px;
+    gap: 16px;
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+    text-align: center;
+    padding: 32px;
+  }
+  .play-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(204,52,45,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  .play-btn svg { width: 24px; height: 24px; fill: white; margin-left: 4px; }
+  .video-caption {
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--ink-hint);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .loom-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    color: var(--ink-muted);
+  }
+
+  /* STEPS */
+  .steps-section { padding: 72px 48px; }
+  .steps-grid { margin-top: 48px; }
+  .step {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 0 24px;
+    position: relative;
+    padding-bottom: 48px;
+  }
+  .step:last-child { padding-bottom: 0; }
+  .step-number-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .step-num {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-muted);
+    background: var(--surface);
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .step.active .step-num {
+    background: var(--ruby);
+    color: #fff;
+    border-color: var(--ruby);
+  }
+  .step-line {
+    flex: 1;
+    width: 1px;
+    background: var(--border);
+    margin-top: 8px;
+  }
+  .step:last-child .step-line { display: none; }
+  .step-content { padding-top: 8px; }
+  .step-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .step-desc {
+    color: var(--ink-muted);
+    font-size: 14px;
+    margin-bottom: 16px;
+    line-height: 1.7;
+  }
+  pre, code {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+  }
+  .code-block {
+    background: #1A1814;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    overflow-x: auto;
+    border: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+  }
+  .code-block::before {
+    content: attr(data-lang);
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+  }
+  .code-block pre { color: #E8E3D8; line-height: 1.7; }
+  .code-block .comment { color: #6B6862; }
+  .code-block .cmd { color: #CC342D; }
+  .code-block .str { color: #C9901A; }
+  .code-block .kw { color: #7EB8DA; }
+  .tip {
+    background: var(--green-light);
+    border-left: 3px solid var(--green);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #1B5E20;
+    margin: 12px 0;
+  }
+  .tip strong { font-weight: 600; }
+
+  /* FILE TREE */
+  .file-tree {
+    background: #1A1814;
+    border-radius: 8px;
+    padding: 20px 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.9;
+    color: #E8E3D8;
+    margin: 16px 0;
+  }
+  .file-tree .dir { color: #7EB8DA; }
+  .file-tree .important { color: #C9901A; }
+
+  /* GITHUB SECTION */
+  .github-section {
+    padding: 64px 48px;
+    background: var(--ink);
+    color: #fff;
+  }
+  .github-section .section-label { color: #C9901A; }
+  .github-section .section-title { color: #fff; }
+  .github-section .section-subtitle { color: rgba(255,255,255,0.55); }
+  .github-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 28px 32px;
+    max-width: 560px;
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .github-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .github-icon svg { width: 24px; height: 24px; fill: white; }
+  .github-info { flex: 1; }
+  .github-label { font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 4px; font-family: 'DM Mono', monospace; }
+  .github-url {
+    font-size: 15px;
+    color: #7EB8DA;
+    font-family: 'DM Mono', monospace;
+    text-decoration: none;
+    word-break: break-all;
+  }
+  .github-url:hover { text-decoration: underline; }
+  .github-steps-list {
+    list-style: none;
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 640px;
+  }
+  .github-steps-list li {
+    display: flex;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+  }
+  .github-steps-list li:last-child { border-bottom: none; }
+  .gh-step-n {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: #C9901A;
+    padding-top: 1px;
+    flex-shrink: 0;
+    width: 24px;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 48px;
+    background: var(--surface-3);
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--ink-hint);
+    font-size: 13px;
+  }
+  footer a { color: var(--ruby); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    .hero, .video-section, .steps-section, .github-section { padding: 48px 24px; }
+    .step { grid-template-columns: 52px 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="badge"><span class="badge-dot"></span>Ruby on Rails · Getting Started Guide</div>
+    <h1>Створення <em>блогу</em><br>на Ruby on Rails</h1>
+    <p>Покроковий гайд за офіційною документацією rubyonrails.org — від встановлення до деплою на GitHub.</p>
+    <div class="hero-links">
+      <a href="https://guides.rubyonrails.org/getting_started.html" target="_blank" class="btn btn-primary">
+        ↗ Офіційний гайд
+      </a>
+      <a href="https://github.com" target="_blank" class="btn btn-ghost">
+        GitHub репозиторій
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- VIDEO SECTION -->
+<section class="video-section">
+  <div class="container">
+    <p class="section-label">▶ Демо відео</p>
+    <h2 class="section-title">Сетап проекту<br>та демонстрація</h2>
+    <p class="section-subtitle">Відеозапис повного процесу налаштування та роботи з Ruby on Rails блогом, записаний через Loom.</p>
+
+    <div class="video-wrapper">
+      <!-- Замініть цей блок на реальний Loom embed код -->
+      <!-- <div style="position:relative;padding-bottom:56.25%;height:0;"><iframe src="https://www.loom.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div> -->
+      <div class="video-placeholder">
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <strong style="color:rgba(255,255,255,0.8); font-size:16px;">Додайте ваше Loom відео</strong>
+        <span>Запишіть демо через <a href="https://loom.com" target="_blank" style="color:#CC342D;">loom.com</a>, потім замініть цей блок на iframe embed код</span>
+      </div>
+    </div>
+
+    <div class="video-caption">
+      <span class="loom-badge">📹 Loom</span>
+      Щоб додати відео: запишіть на loom.com → скопіюйте embed-код → вставте замість placeholder
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="steps-section">
+  <div class="container">
+    <p class="section-label">📋 Покроковий гайд</p>
+    <h2 class="section-title">Як створити Rails блог</h2>
+    <p class="section-subtitle" style="margin-bottom:0">Кожен крок — за офіційним <a href="https://guides.rubyonrails.org/getting_started.html" target="_blank" style="color:var(--ruby)">Getting Started з Rails</a>.</p>
+
+    <div class="steps-grid">
+
+      <!-- STEP 1 -->
+      <div class="step active">
+        <div class="step-number-col">
+          <div class="step-num">01</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Встановлення Ruby та Rails</div>
+          <div class="step-desc">Перевірте та встановіть Ruby (≥ 3.2), RubyGems і Rails через gem install. Рекомендується використовувати rbenv або RVM для управління версіями.</div>
+          <div class="code-block" data-lang="bash">
+<pre><span class="comment"># Перевірити версію Ruby</span>
+<span class="cmd">ruby</span> --version
+
+<span class="comment"># Встановити Rails</span>
+<span class="cmd">gem</span> install rails
+
+<span class="comment"># Перевірити версію Rails</span>
+<span class="cmd">rails</span> --version
+<span class="comment"># => Rails 8.x.x</span></pre>
+          </div>
+          <div class="tip"><strong>Примітка:</strong> Для Windows рекомендується WSL2 (Ubuntu). Для macOS — Homebrew + rbenv.</div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step">
+        <div class="step-number-col">
+          <div class="step-num">02</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Створення нового Rails проекту</div>
+          <div class="step-desc">Команда <code>rails new</code> генерує повну структуру програми з усіма необхідними файлами та залежностями.</div>
+          <div class="code-block" data-lang="bash">
+<pre><span class="comment"># Створити новий Rails додаток</span>
+<span class="cmd">rails</span> new blog
+
+<span class="comment"># Перейти в папку проекту</span>
+<span class="cmd">cd</span> blog
+
+<span class="comment"># Запустити сервер</span>
+<span class="cmd">rails</span> server</pre>
+          </div>
+          <div class="file-tree">
+blog/
+├── <span class="dir">app/</span>
+│   ├── <span class="dir">controllers/</span>
+│   ├── <span class="dir">models/</span>
+│   └── <span class="important">views/</span>
+├── <span class="dir">config/</span>
+│   └── <span class="important">routes.rb</span>
+├── <span class="dir">db/</span>
+├── <span class="important">Gemfile</span>
+└── <span class="important">README.md</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step">
+        <div class="step-number-col">
+          <div class="step-num">03</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Генерація Article ресурсу</div>
+          <div class="step-desc">Scaffold автоматично створює модель, контролер, в'юхи та маршрути для CRUD операцій над статтями блогу.</div>
+          <div class="code-block" data-lang="bash">
+<pre><span class="comment"># Scaffold для Article (заголовок + текст)</span>
+<span class="cmd">rails</span> generate scaffold Article \
+  title:string body:text
+
+<span class="comment"># Застосувати міграцію бази даних</span>
+<span class="cmd">rails</span> db:migrate</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step">
+        <div class="step-number-col">
+          <div class="step-num">04</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Налаштування маршрутів</div>
+          <div class="step-desc">Відредагуйте <code>config/routes.rb</code>, щоб встановити кореневий маршрут на список статей.</div>
+          <div class="code-block" data-lang="ruby">
+<pre><span class="comment"># config/routes.rb</span>
+<span class="kw">Rails</span>.application.routes.draw <span class="kw">do</span>
+  root <span class="str">"articles#index"</span>
+  resources :articles
+<span class="kw">end</span></pre>
+          </div>
+          <div class="tip"><strong>Перевірте маршрути:</strong> Запустіть <code>rails routes</code> щоб побачити всі доступні URL-шляхи.</div>
+        </div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="step">
+        <div class="step-number-col">
+          <div class="step-num">05</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Додавання коментарів</div>
+          <div class="step-desc">Розширте блог функцією коментарів — це демонструє зв'язки між моделями (has_many / belongs_to) у Rails.</div>
+          <div class="code-block" data-lang="bash">
+<pre><span class="comment"># Генерація моделі Comment</span>
+<span class="cmd">rails</span> generate model Comment \
+  commenter:string body:text \
+  article:references
+
+<span class="cmd">rails</span> db:migrate</pre>
+          </div>
+          <div class="code-block" data-lang="ruby">
+<pre><span class="comment"># app/models/article.rb</span>
+<span class="kw">class</span> Article < ApplicationRecord
+  has_many :comments, dependent: :destroy
+  validates :title, presence: <span class="kw">true</span>
+  validates :body, presence: <span class="kw">true</span>,
+                   length: { minimum: <span class="str">10</span> }
+<span class="kw">end</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 6 -->
+      <div class="step">
+        <div class="step-number-col">
+          <div class="step-num">06</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Базова безпека (HTTP Auth)</div>
+          <div class="step-desc">Захистіть адміністративні дії (create, edit, destroy) простою HTTP Basic автентифікацією, що вбудована у Rails.</div>
+          <div class="code-block" data-lang="ruby">
+<pre><span class="comment"># app/controllers/articles_controller.rb</span>
+<span class="kw">class</span> ArticlesController < ApplicationController
+  http_basic_authenticate_with \
+    name: <span class="str">"admin"</span>,
+    password: <span class="str">"secret"</span>,
+    except: [:index, :show]
+
+  <span class="comment"># ... решта дій</span>
+<span class="kw">end</span></pre>
+          </div>
+          <div class="tip"><strong>Готово!</strong> Відкрийте <code>http://localhost:3000</code> і ваш блог працює ✓</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- GITHUB SECTION -->
+<section class="github-section">
+  <div class="container">
+    <p class="section-label">◈ Публікація на GitHub</p>
+    <h2 class="section-title" style="font-family:'Fraunces',serif;font-weight:300;">Залити проект<br>на GitHub</h2>
+    <p class="section-subtitle">Кроки для ініціалізації Git-репозиторію та публікації коду.</p>
+
+    <ul class="github-steps-list">
+      <li>
+        <span class="gh-step-n">01</span>
+        <div>
+          <strong style="color:#fff; display:block; margin-bottom:4px;">Ініціалізація репозиторію</strong>
+          <code style="background:rgba(255,255,255,0.06); border-radius:4px; padding:2px 8px; font-size:13px; color:#E8E3D8;">git init && git add . && git commit -m "Initial Rails blog"</code>
+        </div>
+      </li>
+      <li>
+        <span class="gh-step-n">02</span>
+        <div>
+          <strong style="color:#fff; display:block; margin-bottom:4px;">Створити репозиторій на GitHub</strong>
+          <span>Перейдіть на <a href="https://github.com/new" target="_blank" style="color:#7EB8DA;">github.com/new</a>, введіть назву <code style="background:rgba(255,255,255,0.06); border-radius:4px; padding:2px 6px; color:#E8E3D8;">rails-blog</code> та створіть публічний репо.</span>
+        </div>
+      </li>
+      <li>
+        <span class="gh-step-n">03</span>
+        <div>
+          <strong style="color:#fff; display:block; margin-bottom:4px;">Підключити та завантажити</strong>
+          <code style="background:rgba(255,255,255,0.06); border-radius:4px; padding:2px 8px; font-size:13px; color:#E8E3D8; display:block; line-height:1.8;">git remote add origin https://github.com/YOUR_NAME/rails-blog.git<br>git push -u origin main</code>
+        </div>
+      </li>
+      <li>
+        <span class="gh-step-n">04</span>
+        <div>
+          <strong style="color:#fff; display:block; margin-bottom:4px;">Додати посилання сюди</strong>
+          <span>Вставте URL вашого репозиторію нижче — замініть заглушку на реальне посилання.</span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="github-card">
+      <div class="github-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+        </svg>
+      </div>
+      <div class="github-info">
+        <div class="github-label">REPOSITORY URL</div>
+        <a href="https://github.com/YOUR_USERNAME/rails-blog" target="_blank" class="github-url">
+          github.com/YOUR_USERNAME/rails-blog
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Створено за <a href="https://guides.rubyonrails.org/getting_started.html" target="_blank">офіційним гайдом Ruby on Rails</a> · Демо записано через <a href="https://loom.com" target="_blank">Loom</a></p>
+</footer>
+
+</body>
+</html>
