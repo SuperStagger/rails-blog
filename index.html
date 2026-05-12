@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ruby on Rails Blog — MVC та Коментарі</title>
+<title>Ruby on Rails Blog — Devise + ActiveAdmin</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -403,9 +403,9 @@
 <!-- HERO -->
 <header class="hero">
   <div class="hero-inner">
-    <div class="badge"><span class="badge-dot"></span>Ruby on Rails · MVC + Коментарі</div>
-    <h1>Rails MVC та <em>коментарі</em><br>до постів</h1>
-    <p>Розширення блогу системою коментарів — за офіційною документацією rubyonrails.org. Has many, belongs to, валідації.</p>
+    <div class="badge"><span class="badge-dot"></span>Ruby on Rails · Devise + ActiveAdmin</div>
+    <h1>Авторизація <em>Devise</em><br>та адмін-панель</h1>
+    <p>Додавання автентифікації користувачів через Devise та адміністративної панелі через ActiveAdmin до Rails блогу.</p>
     <div class="hero-links">
       <a href="https://guides.rubyonrails.org/getting_started.html" target="_blank" class="btn btn-primary">
         ↗ Офіційний гайд
@@ -422,15 +422,22 @@
   <div class="container">
     <p class="section-label">▶ Демо відео</p>
     <h2 class="section-title">Сетап проекту<br>та демонстрація</h2>
-    <p class="section-subtitle">Відеозапис повного процесу — Rails MVC, додавання коментарів та деплой на GitHub. Записано через Loom.</p>
+    <p class="section-subtitle">Відеозапис повного процесу — Devise авторизація, ActiveAdmin панель та деплой на GitHub. Записано через Loom.</p>
 
     <div class="video-wrapper">
-      <div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/1eaf6440ca624bceb7026f66343a48a3" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+      <!-- Вставте новий Loom embed код сюди після запису демо -->
+      <div class="video-placeholder">
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <strong style="color:rgba(255,255,255,0.8); font-size:16px;">Додайте нове Loom відео</strong>
+        <span>Запишіть демо Devise + ActiveAdmin через <a href="https://loom.com" target="_blank" style="color:#CC342D;">loom.com</a></span>
+      </div>
     </div>
 
     <div class="video-caption">
       <span class="loom-badge">📹 Loom</span>
-      Демо-відео процесу сетапу Ruby on Rails блогу
+      Демо-відео — Devise авторизація та ActiveAdmin панель
     </div>
   </div>
 </section>
@@ -796,6 +803,223 @@ blog/
 <span class="cmd">git</span> commit -m <span class="str">"Add comments to articles with validation"</span>
 
 <span class="comment"># Залити на GitHub</span>
+<span class="cmd">git</span> push origin main</pre>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- DEVISE SECTION -->
+<section class="steps-section" style="border-top: 1px solid var(--border);">
+  <div class="container">
+    <p class="section-label">🔐 Devise — Авторизація</p>
+    <h2 class="section-title">Автентифікація користувачів</h2>
+    <p class="section-subtitle" style="margin-bottom:0">Встановлення та налаштування <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-user-authentication-with-devise-in-a-rails-7-application" target="_blank" style="color:var(--ruby)">Devise</a> для реєстрації, входу та виходу з акаунту.</p>
+
+    <div style="margin: 36px 0; background: var(--ink); border-radius: 12px; padding: 28px 32px;">
+      <p style="font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.1em; color:rgba(255,255,255,0.3); margin-bottom:20px;">ЩО ДАЄ DEVISE</p>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; text-align:center;">
+        <div style="background:rgba(204,52,45,0.15); border:1px solid rgba(204,52,45,0.3); border-radius:8px; padding:16px 12px;">
+          <div style="font-size:20px; margin-bottom:8px;">👤</div>
+          <div style="color:#fff; font-size:13px; font-weight:500;">Реєстрація</div>
+          <div style="color:rgba(255,255,255,0.4); font-size:12px; margin-top:4px;">/users/sign_up</div>
+        </div>
+        <div style="background:rgba(201,144,26,0.15); border:1px solid rgba(201,144,26,0.3); border-radius:8px; padding:16px 12px;">
+          <div style="font-size:20px; margin-bottom:8px;">🔑</div>
+          <div style="color:#fff; font-size:13px; font-weight:500;">Вхід / Вихід</div>
+          <div style="color:rgba(255,255,255,0.4); font-size:12px; margin-top:4px;">/users/sign_in</div>
+        </div>
+        <div style="background:rgba(126,184,218,0.15); border:1px solid rgba(126,184,218,0.3); border-radius:8px; padding:16px 12px;">
+          <div style="font-size:20px; margin-bottom:8px;">🛡</div>
+          <div style="color:#fff; font-size:13px; font-weight:500;">Захист сторінок</div>
+          <div style="color:rgba(255,255,255,0.4); font-size:12px; margin-top:4px;">before_action</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps-grid">
+
+      <div class="step active">
+        <div class="step-number-col">
+          <div class="step-num">01</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Встановлення Devise</div>
+          <div class="step-desc">Додайте gem до Gemfile та встановіть його через bundler.</div>
+          <div class="code-block" data-lang="ruby">
+<pre><span class="comment"># Gemfile</span>
+gem <span class="str">"devise"</span></pre>
+          </div>
+          <div class="code-block" data-lang="bash">
+<pre><span class="cmd">bundle</span> install
+<span class="cmd">rails</span> generate devise:install</pre>
+          </div>
+          <div class="tip"><strong>Після інсталяції</strong> термінал покаже інструкції — додайте <code>root_url</code> та flash-повідомлення до <code>application.html.erb</code>.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number-col">
+          <div class="step-num">02</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Генерація моделі User</div>
+          <div class="step-desc">Devise генерує модель User з усіма необхідними полями для автентифікації та міграцію бази даних.</div>
+          <div class="code-block" data-lang="bash">
+<pre><span class="cmd">rails</span> generate devise User
+<span class="cmd">rails</span> db:migrate</pre>
+          </div>
+          <div class="code-block" data-lang="ruby">
+<pre><span class="comment"># app/models/user.rb — згенерований Devise</span>
+<span class="kw">class</span> User < ApplicationRecord
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+<span class="kw">end</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number-col">
+          <div class="step-num">03</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Захист контролерів</div>
+          <div class="step-desc">Додайте <code>before_action</code> щоб лише авторизовані користувачі могли створювати та редагувати статті.</div>
+          <div class="code-block" data-lang="ruby">
+<pre><span class="comment"># app/controllers/articles_controller.rb</span>
+<span class="kw">class</span> ArticlesController < ApplicationController
+  before_action :authenticate_user!,
+    except: [:index, :show]
+
+  <span class="comment"># ... решта дій</span>
+<span class="kw">end</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number-col">
+          <div class="step-num">04</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Навігація — вхід / вихід</div>
+          <div class="step-desc">Додайте посилання для входу та виходу у layout файл.</div>
+          <div class="code-block" data-lang="erb">
+<pre><span class="comment">&lt;!-- app/views/layouts/application.html.erb --&gt;</span>
+&lt;% if user_signed_in? %&gt;
+  &lt;%= link_to <span class="str">"Вийти"</span>,
+    destroy_user_session_path,
+    data: { turbo_method: :delete } %&gt;
+&lt;% else %&gt;
+  &lt;%= link_to <span class="str">"Увійти"</span>, new_user_session_path %&gt;
+  &lt;%= link_to <span class="str">"Реєстрація"</span>, new_user_registration_path %&gt;
+&lt;% end %&gt;</pre>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVEADMIN SECTION -->
+<section class="steps-section" style="background: var(--surface-2); border-top: 1px solid var(--border);">
+  <div class="container">
+    <p class="section-label">⚙️ ActiveAdmin — Адмін-панель</p>
+    <h2 class="section-title">Встановлення адміністративної панелі</h2>
+    <p class="section-subtitle" style="margin-bottom:0">
+      <a href="https://activeadmin.info/0-installation.html" target="_blank" style="color:var(--ruby)">ActiveAdmin</a> — готова адмін-панель для управління даними блогу без написання додаткового коду.
+    </p>
+
+    <div class="steps-grid" style="margin-top:48px;">
+
+      <div class="step active">
+        <div class="step-number-col">
+          <div class="step-num">01</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Встановлення ActiveAdmin</div>
+          <div class="step-desc">Додайте необхідні gems до Gemfile. ActiveAdmin вимагає Devise для автентифікації адміністраторів.</div>
+          <div class="code-block" data-lang="ruby">
+<pre><span class="comment"># Gemfile</span>
+gem <span class="str">"activeadmin"</span>
+gem <span class="str">"ransack"</span>   <span class="comment"># для пошуку</span>
+gem <span class="str">"kaminari"</span>  <span class="comment"># для пагінації</span></pre>
+          </div>
+          <div class="code-block" data-lang="bash">
+<pre><span class="cmd">bundle</span> install
+<span class="cmd">rails</span> generate active_admin:install
+<span class="cmd">rails</span> db:migrate
+<span class="cmd">rails</span> db:seed</pre>
+          </div>
+          <div class="tip"><strong>Після seed:</strong> адмін акаунт — <code>admin@example.com</code> / пароль <code>password</code>. Змініть у <code>db/seeds.rb</code>!</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number-col">
+          <div class="step-num">02</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Реєстрація моделей в адмінці</div>
+          <div class="step-desc">Додайте Article і Comment до панелі адміністратора щоб керувати ними через UI.</div>
+          <div class="code-block" data-lang="bash">
+<pre><span class="cmd">rails</span> generate active_admin:resource Article
+<span class="cmd">rails</span> generate active_admin:resource Comment</pre>
+          </div>
+          <div class="code-block" data-lang="ruby">
+<pre><span class="comment"># app/admin/articles.rb</span>
+ActiveAdmin.register Article <span class="kw">do</span>
+  permit_params :title, :body
+
+  index <span class="kw">do</span>
+    selectable_column
+    id_column
+    column :title
+    column :created_at
+    actions
+  <span class="kw">end</span>
+<span class="kw">end</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number-col">
+          <div class="step-num">03</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Відкрити адмін-панель</div>
+          <div class="step-desc">Запустіть сервер і перейдіть за адресою — панель вже готова до роботи.</div>
+          <div class="code-block" data-lang="bash">
+<pre><span class="cmd">rails</span> server</pre>
+          </div>
+          <div class="tip"><strong>Адмін-панель доступна за:</strong> <code>http://localhost:3000/admin</code> — увійдіть з кредами з seeds.rb</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number-col">
+          <div class="step-num">04</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Залити зміни на GitHub</div>
+          <div class="step-desc">Зафіксуйте всі зміни та відправте в існуючий репозиторій.</div>
+          <div class="code-block" data-lang="bash">
+<pre><span class="cmd">git</span> add .
+<span class="cmd">git</span> commit -m <span class="str">"Add Devise auth and ActiveAdmin panel"</span>
 <span class="cmd">git</span> push origin main</pre>
           </div>
         </div>
