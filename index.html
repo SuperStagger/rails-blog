@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ruby on Rails Blog — Повний Гайд</title>
+<title>Ruby on Rails Blog — MVC та Коментарі</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -403,9 +403,9 @@
 <!-- HERO -->
 <header class="hero">
   <div class="hero-inner">
-    <div class="badge"><span class="badge-dot"></span>Ruby on Rails · Getting Started Guide</div>
-    <h1>Створення <em>блогу</em><br>на Ruby on Rails</h1>
-    <p>Покроковий гайд за офіційною документацією rubyonrails.org — від встановлення до деплою на GitHub.</p>
+    <div class="badge"><span class="badge-dot"></span>Ruby on Rails · MVC + Коментарі</div>
+    <h1>Rails MVC та <em>коментарі</em><br>до постів</h1>
+    <p>Розширення блогу системою коментарів — за офіційною документацією rubyonrails.org. Has many, belongs to, валідації.</p>
     <div class="hero-links">
       <a href="https://guides.rubyonrails.org/getting_started.html" target="_blank" class="btn btn-primary">
         ↗ Офіційний гайд
@@ -422,17 +422,15 @@
   <div class="container">
     <p class="section-label">▶ Демо відео</p>
     <h2 class="section-title">Сетап проекту<br>та демонстрація</h2>
-    <p class="section-subtitle">Відеозапис повного процесу налаштування та роботи з Ruby on Rails блогом, записаний через Loom.</p>
+    <p class="section-subtitle">Відеозапис повного процесу — Rails MVC, додавання коментарів та деплой на GitHub. Записано через Loom.</p>
 
     <div class="video-wrapper">
-      <!-- Замініть цей блок на реальний Loom embed код -->
-      <!-- <div style="position:relative;padding-bottom:56.25%;height:0;"><iframe src="https://www.loom.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div> -->
       <div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/e1b5903df746439e8cbc03261b91f477" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     </div>
 
     <div class="video-caption">
       <span class="loom-badge">📹 Loom</span>
-      Щоб додати відео: запишіть на loom.com → скопіюйте embed-код → вставте замість placeholder
+      Демо-відео процесу сетапу Ruby on Rails блогу
     </div>
   </div>
 </section>
@@ -601,6 +599,212 @@ blog/
   </div>
 </section>
 
+<!-- MVC + COMMENTS SECTION -->
+<section class="steps-section" style="background: var(--surface-2); border-top: 1px solid var(--border);">
+  <div class="container">
+    <p class="section-label">🏗 Rails MVC + Коментарі</p>
+    <h2 class="section-title">Додавання коментарів до постів</h2>
+    <p class="section-subtitle" style="margin-bottom:0">Реалізація зв'язку <code>has_many / belongs_to</code> та валідації — за <a href="https://guides.rubyonrails.org/getting_started.html" target="_blank" style="color:var(--ruby)">офіційним гайдом</a>.</p>
+
+    <!-- MVC DIAGRAM -->
+    <div style="margin: 36px 0; background: var(--ink); border-radius: 12px; padding: 28px 32px;">
+      <p style="font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.1em; color:rgba(255,255,255,0.3); margin-bottom:20px;">RAILS MVC АРХІТЕКТУРА</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; text-align:center;">
+        <div style="background:rgba(204,52,45,0.15); border:1px solid rgba(204,52,45,0.3); border-radius:8px; padding:20px 12px;">
+          <div style="font-size:11px; font-family:'DM Mono',monospace; color:#F4A4A1; letter-spacing:0.08em; margin-bottom:8px;">MODEL</div>
+          <div style="color:#fff; font-size:14px; font-weight:500; margin-bottom:8px;">Article / Comment</div>
+          <div style="color:rgba(255,255,255,0.4); font-size:12px; line-height:1.6;">Дані, зв'язки,<br>валідації</div>
+        </div>
+        <div style="background:rgba(201,144,26,0.15); border:1px solid rgba(201,144,26,0.3); border-radius:8px; padding:20px 12px;">
+          <div style="font-size:11px; font-family:'DM Mono',monospace; color:#F4C75A; letter-spacing:0.08em; margin-bottom:8px;">VIEW</div>
+          <div style="color:#fff; font-size:14px; font-weight:500; margin-bottom:8px;">ERB шаблони</div>
+          <div style="color:rgba(255,255,255,0.4); font-size:12px; line-height:1.6;">HTML + Ruby<br>для браузера</div>
+        </div>
+        <div style="background:rgba(126,184,218,0.15); border:1px solid rgba(126,184,218,0.3); border-radius:8px; padding:20px 12px;">
+          <div style="font-size:11px; font-family:'DM Mono',monospace; color:#7EB8DA; letter-spacing:0.08em; margin-bottom:8px;">CONTROLLER</div>
+          <div style="color:#fff; font-size:14px; font-weight:500; margin-bottom:8px;">CommentsController</div>
+          <div style="color:rgba(255,255,255,0.4); font-size:12px; line-height:1.6;">Логіка запитів<br>та відповідей</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps-grid">
+
+      <!-- COMMENT STEP 1 -->
+      <div class="step active">
+        <div class="step-number-col">
+          <div class="step-num">01</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Генерація моделі Comment</div>
+          <div class="step-desc">Створюємо модель Comment з посиланням на Article через <code>article:references</code> — Rails автоматично додасть зовнішній ключ і індекс.</div>
+          <div class="code-block" data-lang="bash">
+<pre><span class="comment"># Генерація моделі Comment</span>
+<span class="cmd">rails</span> generate model Comment \
+  commenter:string \
+  body:text \
+  article:references
+
+<span class="comment"># Застосувати міграцію</span>
+<span class="cmd">rails</span> db:migrate</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMMENT STEP 2 -->
+      <div class="step">
+        <div class="step-number-col">
+          <div class="step-num">02</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Зв'язки між моделями (has_many / belongs_to)</div>
+          <div class="step-desc">Один пост має багато коментарів, кожен коментар належить конкретному посту — це класичний зв'язок one-to-many у Rails.</div>
+          <div class="code-block" data-lang="ruby">
+<pre><span class="comment"># app/models/article.rb</span>
+<span class="kw">class</span> Article < ApplicationRecord
+  has_many :comments, dependent: :destroy
+  validates :title, presence: <span class="kw">true</span>
+  validates :body, presence: <span class="kw">true</span>,
+                   length: { minimum: <span class="str">10</span> }
+<span class="kw">end</span>
+
+<span class="comment"># app/models/comment.rb</span>
+<span class="kw">class</span> Comment < ApplicationRecord
+  belongs_to :article
+  validates :body, presence: <span class="kw">true</span>
+<span class="kw">end</span></pre>
+          </div>
+          <div class="tip"><strong>Важливо:</strong> <code>validates :body, presence: true</code> — обов'язкова валідація за умовами завдання. Коментар без тексту не збережеться.</div>
+        </div>
+      </div>
+
+      <!-- COMMENT STEP 3 -->
+      <div class="step">
+        <div class="step-number-col">
+          <div class="step-num">03</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Маршрути — вкладені ресурси</div>
+          <div class="step-desc">Коментарі є вкладеними ресурсами всередині статей. Це відображає їх залежність у URL-структурі.</div>
+          <div class="code-block" data-lang="ruby">
+<pre><span class="comment"># config/routes.rb</span>
+<span class="kw">Rails</span>.application.routes.draw <span class="kw">do</span>
+  root <span class="str">"articles#index"</span>
+  resources :articles <span class="kw">do</span>
+    resources :comments
+  <span class="kw">end</span>
+<span class="kw">end</span></pre>
+          </div>
+          <div class="tip">URL коментарів матиме вигляд: <code>/articles/1/comments</code></div>
+        </div>
+      </div>
+
+      <!-- COMMENT STEP 4 -->
+      <div class="step">
+        <div class="step-number-col">
+          <div class="step-num">04</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">CommentsController</div>
+          <div class="step-desc">Контролер обробляє створення та видалення коментарів. Знаходить батьківську статтю через <code>params[:article_id]</code>.</div>
+          <div class="code-block" data-lang="bash">
+<pre><span class="cmd">rails</span> generate controller Comments</pre>
+          </div>
+          <div class="code-block" data-lang="ruby">
+<pre><span class="comment"># app/controllers/comments_controller.rb</span>
+<span class="kw">class</span> CommentsController < ApplicationController
+  <span class="kw">def</span> create
+    @article = Article.find(params[:article_id])
+    @comment = @article.comments.create(comment_params)
+    redirect_to article_path(@article)
+  <span class="kw">end</span>
+
+  <span class="kw">def</span> destroy
+    @article = Article.find(params[:article_id])
+    @comment = @article.comments.find(params[:id])
+    @comment.destroy
+    redirect_to article_path(@article)
+  <span class="kw">end</span>
+
+  <span class="kw">private</span>
+    <span class="kw">def</span> comment_params
+      params.require(:comment).permit(:commenter, :body)
+    <span class="kw">end</span>
+<span class="kw">end</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMMENT STEP 5 -->
+      <div class="step">
+        <div class="step-number-col">
+          <div class="step-num">05</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">View — форма та список коментарів</div>
+          <div class="step-desc">Додайте форму та список коментарів у в'юху статті <code>app/views/articles/show.html.erb</code>.</div>
+          <div class="code-block" data-lang="erb">
+<pre><span class="comment">&lt;!-- Список коментарів --&gt;</span>
+&lt;h2&gt;Коментарі&lt;/h2&gt;
+&lt;% @article.comments.each <span class="kw">do</span> |comment| %&gt;
+  &lt;div&gt;
+    &lt;strong&gt;&lt;%= comment.commenter %&gt;&lt;/strong&gt;
+    &lt;p&gt;&lt;%= comment.body %&gt;&lt;/p&gt;
+    &lt;%= link_to <span class="str">"Видалити"</span>,
+      article_comment_path(@article, comment),
+      data: { turbo_method: :delete } %&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+
+<span class="comment">&lt;!-- Форма нового коментаря --&gt;</span>
+&lt;h2&gt;Новий коментар&lt;/h2&gt;
+&lt;%= form_with model: [@article, Comment.new] <span class="kw">do</span> |f| %&gt;
+  &lt;p&gt;
+    &lt;%= f.label :commenter %&gt;&lt;br&gt;
+    &lt;%= f.text_field :commenter %&gt;
+  &lt;/p&gt;
+  &lt;p&gt;
+    &lt;%= f.label :body %&gt;&lt;br&gt;
+    &lt;%= f.text_area :body %&gt;
+  &lt;/p&gt;
+  &lt;%= f.submit %&gt;
+&lt;% end %&gt;</pre>
+          </div>
+          <div class="tip"><strong>Готово!</strong> Запустіть <code>rails server</code> і перейдіть на будь-яку статтю — форма коментарів вже працює ✓</div>
+        </div>
+      </div>
+
+      <!-- COMMENT STEP 6 -->
+      <div class="step">
+        <div class="step-number-col">
+          <div class="step-num">06</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Залити зміни на GitHub</div>
+          <div class="step-desc">Додайте всі зміни до існуючого репозиторію новим комітом.</div>
+          <div class="code-block" data-lang="bash">
+<pre><span class="comment"># Додати всі змінені файли</span>
+<span class="cmd">git</span> add .
+
+<span class="comment"># Створити коміт</span>
+<span class="cmd">git</span> commit -m <span class="str">"Add comments to articles with validation"</span>
+
+<span class="comment"># Залити на GitHub</span>
+<span class="cmd">git</span> push origin main</pre>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- GITHUB SECTION -->
 <section class="github-section">
   <div class="container">
@@ -648,7 +852,7 @@ blog/
       <div class="github-info">
         <div class="github-label">REPOSITORY URL</div>
         <a href="https://github.com/YOUR_USERNAME/rails-blog" target="_blank" class="github-url">
-          github.com/SuperStagger/rails-blog
+          github.com/YOUR_USERNAME/rails-blog
         </a>
       </div>
     </div>
